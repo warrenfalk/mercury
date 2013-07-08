@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tv.ouya.sample.game;
+package com.warrenfalk.mercury;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,14 +36,6 @@ public class MenuActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MenuActivity.this, GameActivity.class));
-            }
-        });
-
-        Button options = (Button) findViewById(R.id.options_button);
-        options.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MenuActivity.this, OptionsActivity.class));
             }
         });
 

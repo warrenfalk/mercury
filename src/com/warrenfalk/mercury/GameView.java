@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tv.ouya.sample.game;
+package com.warrenfalk.mercury;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

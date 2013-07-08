@@ -15,7 +15,7 @@
  * limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="tv.ouya.sample.game"
+          package="com.warrenfalk.mercury"
           android:versionCode="1"
           android:versionName="1.0">
     <uses-sdk android:minSdkVersion="16"/>

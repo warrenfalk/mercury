@@ -15,12 +15,12 @@
  * limitations under the License.
 -->
 <resources>
-    <string name="app_name">GameSample</string>
-    <string name="menu_title">Welcome to OUYAtron!</string>
+    <string name="app_name">Mercury</string>
+    <string name="menu_title">Test Project, Codename: Mercury</string>
     <string name="new_game">New Game</string>
     <string name="options">Options</string>
     <string name="quit">Quit</string>
-    <string name="options_title">Welcome to OUYAtron!</string>
+    <string name="options_title">Test Project, Codename: Mercury</string>
     <string name="loading_purchases">Loading purchases...</string>
     <string name="level">Choose your level:</string>
     <string name="level_freedom">Freedom</string>
