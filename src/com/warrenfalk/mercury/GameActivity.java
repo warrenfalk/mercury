@@ -16,15 +16,13 @@
 
 package com.warrenfalk.mercury;
 
+import tv.ouya.console.api.OuyaController;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import tv.ouya.console.api.OuyaController;
 
-import static com.warrenfalk.mercury.R.*;
+import com.warrenfalk.mercury.R.layout;
 
 public class GameActivity extends Activity {
 

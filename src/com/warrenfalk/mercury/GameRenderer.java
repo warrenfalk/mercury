@@ -16,51 +16,70 @@
 
 package com.warrenfalk.mercury;
 
-import android.graphics.PointF;
-import android.opengl.GLSurfaceView;
+import java.util.LinkedList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+
+import android.graphics.PointF;
+import android.opengl.GLSurfaceView;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
-	
-	float width = 1920f;
-	float height = 1080f;
+
+	LinkedList<Renderable> renderables = new LinkedList<Renderable>();
+	LinkedList<Renderable> toAdd = new LinkedList<Renderable>();
+
+	float width, height;
 
     public GameRenderer() {
     }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        gl.glMatrixMode(GL10.GL_PROJECTION);
-        gl.glLoadIdentity();
 
-        // orthographic
-        float ratio = width / height;
-        PointF upperLeft = new PointF(0f, 0f);
-        PointF lowerRight = new PointF(width, height);
-        gl.glOrthof(upperLeft.x, lowerRight.x, lowerRight.y, upperLeft.y, -10.0f, 10.0f);
-        //gl.glFrustumf(-10.0f, 10.0f, 10.0f, -10.0f, 0.1f, 100.0f);
-        gl.glViewport(0, 0, (int) width, (int) height);
-        gl.glMatrixMode(GL10.GL_MODELVIEW);
-
-        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-        gl.glClearColor(0f, 0f, 0f, 1.0f);
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int w, int h) {
-        width = w;
-        height = h;
-        gl.glViewport(0, 0, w, h);
+	width = w;
+	height = h;
+	gl.glViewport(0, 0, w, h);
+
+	gl.glMatrixMode(GL10.GL_PROJECTION);
+	gl.glLoadIdentity();
+
+	// orthographic
+	float ratio = width / height;
+	PointF upperLeft = new PointF(0f, 0f);
+	PointF lowerRight = new PointF(width, height);
+	gl.glOrthof(upperLeft.x, lowerRight.x, lowerRight.y, upperLeft.y, -10.0f, 10.0f);
+	//gl.glFrustumf(-10.0f, 10.0f, 10.0f, -10.0f, 0.1f, 100.0f);
+	gl.glViewport(0, 0, (int) width, (int) height);
+	gl.glMatrixMode(GL10.GL_MODELVIEW);
+
+	gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+	gl.glClearColor(0f, 0f, 0f, 1.0f);
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        gl.glLoadIdentity();
+	gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+	gl.glLoadIdentity();
+
+	LinkedList<Renderable> add = null;
+	if (toAdd != null) {
+		synchronized (renderables) {
+			add = toAdd;
+			toAdd = null;
+		}
+	}
+	if (add != null)
+		for (Renderable renderable : add)
+			renderables.push(renderable);
+	for (Renderable renderable : renderables) {
+		renderable.prerender(gl);
+		renderable.render(gl);
+		renderable.postrender(gl);
+	}
     }
 }
