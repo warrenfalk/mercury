@@ -18,6 +18,7 @@ package com.warrenfalk.mercury;
 
 import tv.ouya.console.api.OuyaController;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -25,12 +26,18 @@ import android.view.MotionEvent;
 import com.warrenfalk.mercury.R.layout;
 
 public class GameActivity extends Activity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         OuyaController.init(this);
-        setContentView(layout.game);
+        //setContentView(layout.game);
+        Game game = new Game();
+        GameView view = new GameView(game, this, null);
+        setContentView(view);
+    }
+    
+    protected GameView getGameView() {
+    	return (GameView)findViewById(R.id.game_view);
     }
 
     @Override

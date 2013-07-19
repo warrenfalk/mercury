@@ -21,9 +21,10 @@ import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
 public class GameView extends GLSurfaceView {
-    private GameRenderer _renderer;
+    private GameRenderer renderer;
+    private Game game;
 
-    public GameView(Context context, AttributeSet attrs) {
+    public GameView(Game game, Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -34,7 +35,7 @@ public class GameView extends GLSurfaceView {
     }
 
     private void init() {
-        _renderer = new GameRenderer();
-        setRenderer(_renderer);
+        renderer = new GameRenderer(game);
+        setRenderer(renderer);
     }
 }

@@ -29,10 +29,12 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
 	LinkedList<Renderable> renderables = new LinkedList<Renderable>();
 	LinkedList<Renderable> toAdd = new LinkedList<Renderable>();
+	Game game;
 
 	float width, height;
 
-	public GameRenderer() {
+	public GameRenderer(Game game) {
+		this.game = game;
 	}
 
 	@Override
@@ -66,6 +68,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	public void onDrawFrame(GL10 gl) {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		gl.glLoadIdentity();
+		
+		game.tick();
 
 		LinkedList<Renderable> add = null;
 		if (toAdd != null) {
