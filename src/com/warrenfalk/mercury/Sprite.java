@@ -5,6 +5,7 @@ import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import com.warrenfalk.opengl.Utils;
 import android.content.Context;
 
 public class Sprite extends PositionedRenderable {

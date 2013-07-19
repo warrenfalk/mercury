@@ -1,4 +1,4 @@
-package com.warrenfalk.mercury;
+package com.warrenfalk.opengl;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
