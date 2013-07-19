@@ -21,7 +21,8 @@ import java.util.LinkedList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import android.graphics.PointF;
+import com.warrenfalk.opengl.Vec2;
+
 import android.opengl.GLSurfaceView;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
@@ -50,8 +51,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
 	// orthographic
 	float ratio = width / height;
-	PointF upperLeft = new PointF(0f, 0f);
-	PointF lowerRight = new PointF(width, height);
+	Vec2 upperLeft = new Vec2(0f, 0f);
+	Vec2 lowerRight = new Vec2(width, height);
 	gl.glOrthof(upperLeft.x, lowerRight.x, lowerRight.y, upperLeft.y, -10.0f, 10.0f);
 	//gl.glFrustumf(-10.0f, 10.0f, 10.0f, -10.0f, 0.1f, 100.0f);
 	gl.glViewport(0, 0, (int) width, (int) height);
