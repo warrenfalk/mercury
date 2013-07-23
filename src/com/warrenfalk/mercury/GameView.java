@@ -21,21 +21,21 @@ import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
 public class GameView extends GLSurfaceView {
-    private GameRenderer renderer;
     private Game game;
 
     public GameView(Game game, Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.game = game;
         init();
     }
 
-    public GameView(Context context) {
+    public GameView(Game game, Context context) {
         super(context);
+        this.game = game;
         init();
     }
 
     private void init() {
-        renderer = new GameRenderer(game);
-        setRenderer(renderer);
+        setRenderer(game);
     }
 }

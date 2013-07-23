@@ -26,13 +26,15 @@ import android.view.MotionEvent;
 import com.warrenfalk.mercury.R.layout;
 
 public class GameActivity extends Activity {
+	Game game;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         OuyaController.init(this);
         //setContentView(layout.game);
-        Game game = new Game();
-        GameView view = new GameView(game, this, null);
+        game = new Game(this);
+        GameView view = new GameView(game, this);
         setContentView(view);
     }
     
