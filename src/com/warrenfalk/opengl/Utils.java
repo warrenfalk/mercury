@@ -13,6 +13,14 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
 public class Utils {
+	
+	static final ShortBuffer rectIndexBuffer = createBuffer(new short[] {0, 1, 2, 3});
+	static final FloatBuffer rectVertexBuffer = createBuffer(new float[] {
+	        1f, 1f, 0f,
+	        0f, 1f, 0f,
+	        0f, 0f, 0f,
+	        1f, 0f, 0f,
+	});
 
 	public static ShortBuffer createBuffer(short[] shorts) {
         ByteBuffer bb = ByteBuffer.allocateDirect(shorts.length * 2);
@@ -39,6 +47,11 @@ public class Utils {
 		int textureId = loadGLTextureFromBitmap(bitmap, gl);
 		bitmap.recycle();
 		return textureId;
+	}
+	
+	public static void rect(GL10 gl) {
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, rectVertexBuffer);
+		gl.glDrawElements(GL10.GL_LINE_LOOP, rectIndexBuffer.limit(), GL10.GL_UNSIGNED_SHORT, rectIndexBuffer);
 	}
 	
 	public static int loadGLTextureFromBitmap(Bitmap bitmap, GL10 gl) {
