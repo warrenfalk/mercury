@@ -23,10 +23,14 @@ public class Game implements GLSurfaceView.Renderer {
 	float widthPx, heightPx; // these will be populated with the actual height of the view
 	float widthEm, heightEm; // these will be populated with the height of the view in game units
 	
-	Vec2 playerCoords = new Vec2(15, 20);
-	float testVal;
+	Vec2 playerCoords = new Vec2(15, 15);
+	Grapple[] grapple = new Grapple[] {
+		new Grapple(15, 5),
+	};
+	static float testVal;
 	
 	PlayerRenderer playerRenderer = new PlayerRenderer();
+	GrappleRenderer grappleRenderer = new GrappleRenderer();
 	
 	public Game(Context context) {
 		this.context = context;
@@ -63,6 +67,11 @@ public class Game implements GLSurfaceView.Renderer {
 		move(gl, playerCoords.x, playerCoords.y, 5, 3, 3, 1, 0, 0, 0, 0);
 		playerRenderer.render(gl);
 		gl.glPopMatrix();
+
+		for (Grapple g : grapple) {
+			grappleRenderer.grapple = g;
+			grappleRenderer.render(gl);
+		}
 		
 	}
 	
@@ -74,6 +83,7 @@ public class Game implements GLSurfaceView.Renderer {
 	
 	void setupRenderers(GL10 gl) {
 		playerRenderer.setup(gl, context);
+		grappleRenderer.setup(gl, context);
 	}
 
 	@Override
