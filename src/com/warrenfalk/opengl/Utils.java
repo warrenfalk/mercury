@@ -6,6 +6,8 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.opengles.GL11;
+import javax.microedition.khronos.opengles.GL11Ext;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -69,12 +71,49 @@ public class Utils {
 
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_S, GL10.GL_CLAMP_TO_EDGE);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_WRAP_T, GL10.GL_CLAMP_TO_EDGE);
-
-		// Use the Android GLUtils to specify a two-dimensional texture image
-		// from our bitmap
-		GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
-
+		
+		gl.glTexEnvf(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE, GL10.GL_MODULATE); 
+		//GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
+		myTexImage2D(gl, bitmap);
+		
+		((GL11)gl).glTexParameteriv(GL10.GL_TEXTURE_2D, GL11Ext.GL_TEXTURE_CROP_RECT_OES, new int[] { 0, bitmap.getHeight(), bitmap.getWidth(), - bitmap.getHeight() }, 0); 
 		return textureIds[0];
 	}
+
+	private static void myTexImage2D(GL10 gl, Bitmap bitmap) {
+		// Don't loading using GLUtils, load using gl-method directly
+		// GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
+		int[] pixels = extractPixels(bitmap);
+		byte[] pixelComponents = new byte[pixels.length * 4];
+		int byteIndex = 0;
+		for (int i = 0; i < pixels.length; i++) {
+			int p = pixels[i];
+			// Convert to byte representation RGBA required by gl.glTexImage2D.
+			// We don't use intbuffer, because then we
+			// would be relying on the intbuffer wrapping to write the ints in
+			// big-endian format, which means it would work for the wrong
+			// reasons, and it might brake on some hardware.
+			pixelComponents[byteIndex++] = (byte) ((p >> 16) & 0xFF); // red
+			pixelComponents[byteIndex++] = (byte) ((p >> 8) & 0xFF); // green
+			pixelComponents[byteIndex++] = (byte) ((p) & 0xFF); // blue
+			pixelComponents[byteIndex++] = (byte) (p >> 24); // alpha
+		}
+		ByteBuffer pixelBuffer = ByteBuffer.wrap(pixelComponents);
+
+		gl.glTexImage2D(GL10.GL_TEXTURE_2D, 0, GL10.GL_RGBA, bitmap.getWidth(),
+				bitmap.getHeight(), 0, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE,
+				pixelBuffer);
+	}
+
+    public static int[] extractPixels(Bitmap src) { 
+            int x = 0; 
+            int y = 0; 
+            int w = src.getWidth(); 
+            int h = src.getHeight(); 
+            int[] colors = new int[w * h]; 
+            src.getPixels(colors, 0, w, x, y, w, h); 
+            return colors; 
+    } 
+
 
 }

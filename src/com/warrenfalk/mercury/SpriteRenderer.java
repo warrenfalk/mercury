@@ -55,7 +55,9 @@ public class SpriteRenderer implements ObjectRenderer {
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 		gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureId);
+		gl.glEnable(GL10.GL_ALPHA_BITS);
 		gl.glDrawElements(GL10.GL_TRIANGLES, indexBuffer.limit(), GL10.GL_UNSIGNED_SHORT, indexBuffer);
+		gl.glDisable(GL10.GL_ALPHA_BITS);
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, 0);
 	}
 
