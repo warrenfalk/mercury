@@ -65,18 +65,18 @@ public class PlayerRenderer implements ObjectRenderer {
 						0.78f,
 						UP_ARM2,
 						new SpriteRenderer(R.drawable.player_uparm),
-						new Component[0],
 						new Component[] {
-							new Component(
-									0.445f, 0.242f,
-									0.03f, 0.63f,
-									0.78f,
-									LOW_ARM2,
-									new SpriteRenderer(R.drawable.player_lowarm),
-									new Component[0],
-									new Component[0]
-									),
-						}
+								new Component(
+										0.445f, 0.242f,
+										-0.041f, 0.61f,
+										0.78f,
+										LOW_ARM2,
+										new SpriteRenderer(R.drawable.player_lowarm),
+										new Component[0],
+										new Component[0]
+										),
+							},
+						new Component[0]
 						),
 				new Component(
 						0.54f, 0.33f,
@@ -133,18 +133,18 @@ public class PlayerRenderer implements ObjectRenderer {
 						0.78f,
 						UP_ARM,
 						new SpriteRenderer(R.drawable.player_uparm),
-						new Component[0],
 						new Component[] {
 							new Component(
 									0.445f, 0.242f,
-									-0.01f, 0.63f,
+									-0.041f, 0.61f,
 									0.78f,
 									LOW_ARM,
 									new SpriteRenderer(R.drawable.player_lowarm),
 									new Component[0],
 									new Component[0]
 									),
-						}
+						},
+						new Component[0]
 						),
 			}
 			);
@@ -189,7 +189,7 @@ public class PlayerRenderer implements ObjectRenderer {
 		case TORSO:
 			return 3f + sinFunc(speed * 1f, speed * 1.4f, 2f, -0.33f);
 		case HEAD:
-			return sinFunc(speed * -0.3f, speed * 0.3f, 2f, -0.8f);
+			return -3f + sinFunc(speed * -1.3f, speed * -0.7f, 2f, -0.8f);
 		case UP_ARM:
 			return sinFunc(speed * -6.5f, speed * 6.5f, 1f, 0.5f);
 		case UP_ARM2:
