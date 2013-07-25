@@ -37,22 +37,27 @@ public class Game implements GLSurfaceView.Renderer {
 	}
 	
 	public void tick() {
-		float v = OuyaController.getControllerByPlayer(0).getAxisValue(OuyaController.AXIS_RS_Y);
-		if (v != testVal) {
-			testVal = v;
-			Log.v("Controller", "testVal = " + testVal);
+		OuyaController controller = OuyaController.getControllerByPlayer(0);
+		if (controller != null) {
+			float v = OuyaController.getControllerByPlayer(0).getAxisValue(OuyaController.AXIS_RS_Y);
+			if (v != testVal) {
+				testVal = v;
+				Log.v("Controller", "testVal = " + testVal);
+			}
+			
+	        float leftStickX = controller.getAxisValue(OuyaController.AXIS_LS_X);
+	        float playerSpeed = Math.abs(leftStickX * 10f);
+	        playerRenderer.speed = playerSpeed;
+	        
+			float sp = (float)(Math.pow(playerSpeed, 2) * 0.0022);
+			//Log.v("Test", "" +  sp);
+			playerCoords.x += sp;
+			if (playerCoords.x > widthEm)
+				playerCoords.x = 0f;
 		}
 		
-        float leftStickX = OuyaController.getControllerByPlayer(0).getAxisValue(OuyaController.AXIS_LS_X);
-        float playerSpeed = Math.abs(leftStickX * 10f);
-        playerRenderer.speed = playerSpeed;
 		
 		playerRenderer.tick();
-		float sp = (float)(Math.pow(playerSpeed, 2) * 0.0022);
-		//Log.v("Test", "" +  sp);
-		playerCoords.x += sp;
-		if (playerCoords.x > widthEm)
-			playerCoords.x = 0f;
 	}
 
 	@Override
